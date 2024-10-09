@@ -4,103 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Tracking</title>
-    <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .tracking-container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-    }
-    
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-    
-    .tracking-steps {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .step {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .step-icon {
-        font-size: 24px;
-    }
-    
-    .step-label {
-        font-size: 18px;
-        color: #666;
-    }
-    
-    .completed .step-label {
-        color: #28a745;
-    }
-    
-    .optional .step-label {
-        color: #ffc107;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .tracking-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress {
+            height: 20px;
+            background-color: #28a745;
+            width: 0;
+        }
+        
+        .tracking-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-icon {
+            font-size: 24px;
+        }
+        
+        .step-label {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .step-date {
+            font-size: 14px;
+            color: #999;
+            margin-left: auto;
+        }
+        
+        .completed .step-label {
+            color: #28a745;
+        }
+        
+        .optional .step-label {
+            color: #ffc107;
+        }
 
-</style>
+    </style>
 </head>
 <body>
     <div class="tracking-container">
         <h1>Order Tracking</h1>
+        <div class="progress-bar">
+            <div class="progress" style="width: 40%;"></div>
+        </div>
         <div class="tracking-steps">
             <div class="step completed">
                 <div class="step-icon">✔️</div>
                 <div class="step-label">Order Placed</div>
+                <div class="step-date">2024-10-01</div>
             </div>
-            <div class="step">
+            <div class="step completed">
                 <div class="step-icon">📦</div>
                 <div class="step-label">Shipped to Exporter</div>
+                <div class="step-date">2024-10-03</div>
             </div>
             <div class="step">
                 <div class="step-icon">✈️</div>
                 <div class="step-label">Shipped to Destination Country</div>
+                <div class="step-date">2024-10-05</div>
             </div>
             <div class="step optional">
                 <div class="step-icon">🏢</div>
                 <div class="step-label">Arrived at Quarantine Facilities</div>
+                <div class="step-date">2024-10-07</div>
             </div>
             <div class="step">
                 <div class="step-icon">🚚</div>
                 <div class="step-label">Out for Delivery</div>
+                <div class="step-date">2024-10-09</div>
             </div>
             <div class="step">
                 <div class="step-icon">📬</div>
                 <div class="step-label">Delivered</div>
+                <div class="step-date">2024-10-10</div>
             </div>
         </div>
     </div>
 </body>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
     const steps = document.querySelectorAll('.step');
+    const progress = document.querySelector('.progress');
     const currentStatus = 'Shipped to Exporter'; // Example status
+
+    let completedSteps = 0;
 
     steps.forEach(step => {
         const label = step.querySelector('.step-label').textContent;
-        if (label === currentStatus) {
+        if (label === currentStatus || step.classList.contains('completed')) {
             step.classList.add('completed');
+            completedSteps++;
         }
     });
+
+    const progressPercentage = (completedSteps / steps.length) * 100;
+    progress.style.width = `${progressPercentage}%`;
 });
 
-  </script>
+    </script>
 </html>
